@@ -8,9 +8,12 @@ const puppeteer = require('puppeteer')
   const page = await browser.newPage()
   await page.goto('https://google.com')
 
-  await page.evaluate(() => console.log(`url is ${location.href}`))
+  const content = await page.content()
 
-  await page.screenshot({ path: 'example.png' })
+  console.log(content)
+  // await page.evaluate(() => console.log(`url is ${location.href}`))
+
+  // await page.screenshot({ path: 'example.png' })
 
   await browser.close()
 })()
