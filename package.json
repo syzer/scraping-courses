@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/syzer/scraping-courses#readme",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "puppeteer": "^0.13.0"
   }
 }
