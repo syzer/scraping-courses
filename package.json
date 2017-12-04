@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/syzer/scraping-courses/issues"
   },
-  "homepage": "https://github.com/syzer/scraping-courses#readme"
+  "homepage": "https://github.com/syzer/scraping-courses#readme",
+  "dependencies": {
+    "puppeteer": "^0.13.0"
+  }
 }
