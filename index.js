@@ -1,3 +1,5 @@
+// TODO from bash
+const url = 'https://frontendmasters.com/courses/functional-javascript-v2/composition-introduction/'
 const puppeteer = require('puppeteer')
 
 ;(async () => {
@@ -6,7 +8,8 @@ const puppeteer = require('puppeteer')
     slowMo: 250 // slow down by 250ms
   })
   const page = await browser.newPage()
-  await page.goto('https://google.com')
+  await page.goto(url)
+  // TODO cookies
 
   const content = await page.content()
 
