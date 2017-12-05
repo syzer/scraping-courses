@@ -3,25 +3,16 @@ const dotenv = require('dotenv').config()
 const url = 'https://frontendmasters.com/'
 const puppeteer = require('puppeteer')
 
-// const loginKey = 'wordpress_logged_in_323a64690667409e18476e5932ed231e'
+const loginKey = 'wordpress_logged_in_323a64690667409e18476e5932ed231e'
 const { COOKIES } = dotenv.parsed
 const cookies = COOKIES.split(';')
-  .map(line => line.trim().split(/=/))
-  // .filter((arr) => arr.includes(loginKey))
-  .map(([name, ...values]) => ({
-    url: url,
+.map(line => line.trim().split('='))
+.filter((arr) => arr.includes(loginKey))
+  .map(([name, value]) => ({
+    url,
     name,
-    value: values.join('='),
+    value
   }))
-  // .map(console.log)
-// throw 'nope'
-
-;(async () => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 550 // slow down by 250ms
-  })
-  const page = await browser.newPage()
 
   await Promise.all(cookies.map(cookie => page.setCookie(cookie)))
 
