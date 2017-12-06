@@ -75,7 +75,7 @@ async function scrapeCourse(page) {
 
       await fetch(url)
         .then(res =>
-          res.body.pipe(fs.createWriteStream(`./data/${i}.${titles[i]}.mp4`)))
+          res.body.pipe(fs.createWriteStream(`./data/${_.padStart(i, 2, '0')}.${titles[i]}.mp4`)))
         .catch(console.error)
     }))
 
