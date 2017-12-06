@@ -3,7 +3,7 @@ This is about downloading courses from frontendmasters,
 
 # Motivation
 
-When you are on the go (train/airplain) you wanna have offline access to your favotite course/video.
+When you are on the go (train/airplane) you wanna have offline access to your favorite course/video.
 
 
 # How
@@ -27,4 +27,5 @@ npm start
 
 # Warning
 Registration is required!
-This repo is about helping you enjoy your favorite videos, and not fre-loading.
+This repo is about helping you enjoy your favorite videos, and not free-loading.
+
