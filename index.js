@@ -4,15 +4,14 @@ const _ = require('lodash')
 const cheerio = require('cheerio')
 const { login } = require('./lib/login')
 
-async function scrapeCourse(page) {
+async function scrapeCourse(page, courseLabel) {
   try {
-    const course = '#javascript-basics > div.s-vflex-outer > div.cta > a'
+    const course = `#${courseLabel} > div.s-vflex-outer > div.cta > a`
     await page.waitForSelector(course)
     await page.click(course)
     await page.waitFor(1 * 1000)
+    // TODO: figure out timeout or page navigation
     // await page.waitForNavigation()
-
-    throw 'kopytko'
 
     const forFree = 'body > div.s-vflex-outer > div > section.CourseFrame > div > a.Button.ButtonLarge.ButtonRed'
     await page.click(forFree)
@@ -20,18 +19,16 @@ async function scrapeCourse(page) {
 
     const titlesSelector = 'body > div.AppContainer.L-flex-column.lessonlist-open > div.PlayerOuter.L-flex-greedy-outer > div > div.LessonList.L-flex-toggle.active > ol > li > a.lesson'
     const elem = (id) => `body > div.AppContainer.L-flex-column.lessonlist-open > div.PlayerOuter.L-flex-greedy-outer > div > div.LessonList.L-flex-toggle.active > ol > li:nth-child(${id})`
+
     const titlesCount = await page.$$eval(titlesSelector, divs => divs.length)
     console.log('found links:', titlesCount)
 
-    const titlesTexts = Array.from(_.range(1, titlesCount), (i, _) => page.$eval(elem(i), el => el.innerHTML))
-    const sideNav = await Promise.all(titlesTexts)
+    const titles = await page.$$eval(titlesSelector,
+      elves => Array.from(elves)
+        .map(el => el.innerText.split('\n')[0]))
+    const sideNav = await Promise.all(titles)
 
-    // don't ask
-    const titles = sideNav
-      .map(cheerio.load)
-      .map($ => $('.title').text())
-      .filter(e => e)
-    console.log(titles)
+    console.log(`fetched titles: ${titles[0]}`)
 
     const elemLink = (id) => `body > div.AppContainer.L-flex-column.lessonlist-open > div.PlayerOuter.L-flex-greedy-outer > div > div.LessonList.L-flex-toggle.active > ol > li:nth-child(${id}) > a`
 
@@ -55,6 +52,6 @@ async function scrapeCourse(page) {
 
 (async () => {
   const page = await login()
-  await scrapeCourse(page)
+  await scrapeCourse(page, 'web-development')
   console.log('DONE')
 })()
